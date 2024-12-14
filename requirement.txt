@@ -4,3 +4,4 @@ pydantic
 typing
 dotenv
 google-generativeai
+tweepy
