@@ -26,17 +26,21 @@ def get_x_post(post_id):
         json_response = response.json()
         return json_response
     except requests.exceptions.RequestException as e:
-      if response.status_code == 401:
-          print(f"Error: Unauthorized. Check your Bearer Token. Details: {e}")
-      elif response.status_code == 404:
-          print(f"Error: Tweet with ID {post_id} not found. Details: {e}")
-      elif response.status_code == 429:
-          print(f"Error: Too Many Requests. You are being rate limited. Details: {e}")
+      if response.status_code == 429:
+        # Return mock response data
+        with open('mock-response.json') as f:
+            mock_response = json.load(f)
+        return mock_response
       else:
-          print(f"Error fetching tweet: {e}")
-      if hasattr(response, 'text'):
-          print(f"Response text: {response.text}")
-      return None
+        if response.status_code == 401:
+            print(f"Error: Unauthorized. Check your Bearer Token. Details: {e}")
+        elif response.status_code == 404:
+            print(f"Error: Tweet with ID {post_id} not found. Details: {e}")
+        else:
+            print(f"Error fetching tweet: {e}")
+        if hasattr(response, 'text'):
+            print(f"Response text: {response.text}")
+        return None
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON response: {e}")
         if hasattr(response, 'text'):
