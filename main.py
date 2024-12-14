@@ -11,6 +11,7 @@ app = FastAPI()
 class PressReleaseCreate(BaseModel):
   title: str
   description: str
+  sns_url: str
   uid: str
   image: List[str]
 
@@ -34,6 +35,7 @@ async def create_press(resource: PressReleaseCreate):
     "title": resource.title,
     "description": resource.description,
     "uid": resource.uid,
+    "sns_url": resource.sns_url,
     "image": resource.image
   }
   
