@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from mongodb_utils import fetch_all_presses, fetch_press_by_id, insert_press
 
 from models import PressRelease
+from gemini_utils import generate_press_description
 
 app = FastAPI()
 
@@ -31,9 +32,16 @@ async def get_press_by_id(id: str):
 
 @app.post("/press_releases")
 async def create_press(resource: PressReleaseCreate):
+  prompt = "Generate test text"
+  # prompt = "Generate a press description for the post in {resource.sns_url}"
+  if resource.sns_url and not resource.description:
+    description_input = generate_press_description(prompt)
+  else:
+    description_input = resource.description
+
   press = {
     "title": resource.title,
-    "description": resource.description,
+    "description": description_input,
     "uid": resource.uid,
     "sns_url": resource.sns_url,
     "image": resource.image

@@ -3,3 +3,4 @@ pymongo
 pydantic
 typing
 dotenv
+google-generativeai
