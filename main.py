@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status, HTTPException
 from pydantic import BaseModel
+from typing import List
+from fastapi.responses import JSONResponse
 from mongodb_utils import fetch_all_presses, fetch_press_by_id, insert_press
 
 from models import PressRelease
@@ -10,7 +12,7 @@ class PressReleaseCreate(BaseModel):
   title: str
   description: str
   uid: str
-  image: list[str]
+  image: List[str]
 
 @app.get("/")
 async def root():
@@ -30,7 +32,7 @@ async def get_press_by_id(id: str):
 async def create_press(resource: PressReleaseCreate):
   press = {
     "title": resource.title,
-    "content": resource.content,
+    "description": resource.description,
     "uid": resource.uid,
     "image": resource.image
   }
