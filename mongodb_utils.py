@@ -19,6 +19,10 @@ def change_objectid_to_str(result):
     result["_id"] = str(result["_id"])
     return result
 
+def insert_press(press: Dict):
+    result = press_releases_collection.insert_one(press)
+    return str(result.inserted_id)
+
 def fetch_all_presses() -> List[Dict]:
     results = press_releases_collection.find()
     return [change_objectid_to_str(result) for result in results]
