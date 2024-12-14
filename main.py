@@ -33,7 +33,8 @@ async def get_press_by_id(id: str):
 
 @app.post("/press_releases")
 async def create_press(resource: PressReleaseCreate):
-  prompt = "この投稿に基づいてプレスリリースを作成してください。"
+  prompt = "日本語でこの投稿に基づいてプレスリリースを作成してください。"
+
   if resource.sns_url and not resource.sns_url.startswith("https://x.com/"):
     raise HTTPException(status_code=400, detail="sns_url must be from X(formerly Twitter)")
   elif resource.sns_url and not resource.description:
