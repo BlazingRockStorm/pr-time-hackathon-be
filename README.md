@@ -33,3 +33,5 @@ A press release is represented as a JSON object with the following fields:
 ## Storage
 
 The API stores press releases in a MongoDB database. The database is specified by the `MONGODB_URI` environment variable. If this variable is not set, the API will use the default MongoDB URI `mongodb://localhost:27017/`.
+
+When getting API with Ngrok, use `ngrok-skip-browser-warning=true`.
