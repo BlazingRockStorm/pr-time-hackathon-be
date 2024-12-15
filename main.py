@@ -89,5 +89,7 @@ async def create_press(resource: PressReleaseCreate):
     "image": resource.image
   }
   
-  # inserted_id = insert_press(press)
+  inserted_id = insert_press(press)
+  press["_id"] = inserted_id
+
   return JSONResponse(content=press, status_code=status.HTTP_201_CREATED)
