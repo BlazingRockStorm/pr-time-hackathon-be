@@ -18,7 +18,7 @@ def get_x_post(post_id):
         "Content-Type": "application/json"  # Important for v2!
     }
 
-    url = f"https://api.twitter.com/2/tweets/{post_id}"
+    url = f"https://api.twitter.com/2/tweets/{post_id}?expansions=attachments.media_keys&media.fields=url"
 
     try:
         response = requests.get(url, headers=headers)

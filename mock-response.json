@@ -1,9 +1,23 @@
 {
   "data": {
-    "edit_history_tweet_ids": [
-      "1867796663173337300"
-    ],
-    "id": "1867796663173337300",
-    "text": "【2024年12月オープン】魅力あふれる泉州/大阪の名所から穴場スポットをぐるっと巡る新たな旅の拠点～大人数で泊まれる”1棟貸し”施設「臨空の宿 MARUYA Izumisano」～ https://t.co/jtw0v8fb0V https://t.co/FAIG0UIG0b"
+      "edit_history_tweet_ids": [
+          "1866449260667183316"
+      ],
+      "id": "1866449260667183316",
+      "attachments": {
+          "media_keys": [
+              "3_1866449121227538433"
+          ]
+      },
+      "text": "【応募締切まであと22日】\n\nHERALBONY Art Prize 2025 応募受付開始\n\nヘラルボニーはこのプライズを通じて、障害のある方々の創造性が社会に与える影響力を持続的に高めていくと共に、唯一無二の表現を多くの観客に届け、アーティストたちの長期的な成長と活躍を後押しする場を開拓していきます。\n\n🏆… https://t.co/5mwG1QBMTD https://t.co/W8ZFMdfQxh"
+  },
+  "includes": {
+      "media": [
+          {
+              "media_key": "3_1866449121227538433",
+              "type": "photo",
+              "url": "https://pbs.twimg.com/media/Geb1lj4bgAEFpPZ.jpg"
+          }
+      ]
   }
 }

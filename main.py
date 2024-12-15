@@ -45,6 +45,8 @@ async def create_press(resource: PressReleaseCreate):
       try:
         x_text = x_data['data']['text']
         description_input = generate_press_input(description_prompt + x_text)
+        image_urls = [media['url'] for media in x_data['includes']['media']]
+        image_input = resource.image + image_urls
       except KeyError:
           print("Error: Could not find 'text' in the response. The API response structure might have changed.")
           print(json.dumps(tweet_data, indent=4)) #Show the response for debugging
@@ -54,6 +56,7 @@ async def create_press(resource: PressReleaseCreate):
         return None
   else:
     description_input = resource.description
+    image_input = resource.image
 
   if not resource.title:
     title_input = generate_press_input("日本語で一文で以下の記事にタイトルをお付けください" + description_input)
@@ -65,7 +68,7 @@ async def create_press(resource: PressReleaseCreate):
     "description": description_input,
     "uid": resource.uid,
     "sns_url": resource.sns_url,
-    "image": resource.image
+    "image": image_input
   }
   
   inserted_id = insert_press(press)
