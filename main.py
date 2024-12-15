@@ -4,6 +4,8 @@ from typing import List
 from fastapi.responses import JSONResponse
 from mongodb_utils import fetch_all_presses, fetch_press_by_id, insert_press
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from models import PressRelease
 from gemini_utils import generate_press_input
@@ -35,6 +37,10 @@ class PressReleaseCreate(BaseModel):
 async def root():
   return {"message": "Hello World"}
 
+@app.get("/static/default.png")
+async def default_image():
+    return FileResponse("static/default.png")
+
 @app.get("/press_releases")
 async def get_all_presses():
     presses = fetch_all_presses()
@@ -47,7 +53,7 @@ async def get_press_by_id(id: str):
 
 @app.post("/press_releases")
 async def create_press(resource: PressReleaseCreate):
-  description_prompt = "日本語でこの投稿に基づいてプレスリリースを作成してください。"
+  description_prompt = "あなたは与えられたxの投稿内容を基に、PR TIMES用のプレスリリース文章を作成するアシスタントです。以下の構成に従って文章を作成してください：イントロ（100文字）：投稿の概要を簡潔に説明する。本文（100文字×3パート）：各パートで内容を掘り下げて説明。タイトルは内容を元に適切かつ簡潔に生成し、イントロやまとめなどの直接的な表現は避けること。タイトルの例は以下の通り、イントロのパートに対しては、【ベルギーの障害を持つアーティストと協業します！】など。まとめ（100文字）：全体の要約や今後の展望を記載する。注意事項：各段落の冒頭に【構成のタイトル】を記載すること。生成結果はplain text形式のみで出力し、装飾やマークダウン記法は使用しないでください。以上のフォーマットを守り、正確かつ魅力的なプレスリリースを作成してください。"
 
   if resource.sns_url and not resource.sns_url.startswith("https://x.com/"):
     raise HTTPException(status_code=400, detail="sns_url must be from X(formerly Twitter)")
@@ -85,5 +91,5 @@ async def create_press(resource: PressReleaseCreate):
     "image": image_input
   }
   
-  inserted_id = insert_press(press)
-  return JSONResponse(content={"inserted_id": inserted_id}, status_code=status.HTTP_201_CREATED)
+  # inserted_id = insert_press(press)
+  return JSONResponse(content=press, status_code=status.HTTP_201_CREATED)
