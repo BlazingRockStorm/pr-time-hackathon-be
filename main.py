@@ -3,12 +3,26 @@ from pydantic import BaseModel
 from typing import List
 from fastapi.responses import JSONResponse
 from mongodb_utils import fetch_all_presses, fetch_press_by_id, insert_press
+from fastapi.middleware.cors import CORSMiddleware
 
 from models import PressRelease
 from gemini_utils import generate_press_input
 from x_api_utils import get_x_post
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+    "https://prtimes-hackathon-fe.vercel.app",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class PressReleaseCreate(BaseModel):
   title: str
