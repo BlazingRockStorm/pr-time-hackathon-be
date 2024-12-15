@@ -65,8 +65,9 @@ async def create_press(resource: PressReleaseCreate):
       try:
         x_text = x_data['data']['text']
         description_input = generate_press_input(description_prompt + x_text)
-        image_urls = [media['url'] for media in x_data['includes']['media']]
-        resource.image.extend(image_urls)
+        if 'includes' in x_data:
+          image_urls = [media['url'] for media in x_data['includes']['media']]
+          resource.image.extend(image_urls)
       except KeyError:
           print("Error: Could not find 'text' in the response. The API response structure might have changed.")
           print(json.dumps(tweet_data, indent=4)) #Show the response for debugging
